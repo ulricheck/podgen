@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.9.4)
 project(podgen)
 
+include(GNUInstallDirs)
+
 find_package(CapnProto REQUIRED)
 find_library(CAPNPC_LIBRARY capnpc)
 
@@ -29,6 +31,8 @@ add_custom_target(copy_templates
     COMMAND ${CMAKE_COMMAND} -E copy_if_different ${include_files} ${CMAKE_CURRENT_BINARY_DIR}/include
 )
 add_dependencies(podgen copy_templates)
+
+install(TARGETS podgen DESTINATION ${CMAKE_INSTALL_BINDIR})
 
 find_library(CCTZ_LIB cctz REQUIRED)
 find_path(CCTZ_INCLUDE cctz/time_zone.h REQUIRED)
